@@ -1,4 +1,7 @@
 # template-flutter-app
+https://api.codemagic.io/apps/6a90358a26b2ddf9fd1c04bc/6a90358a26b2ddf9fd1c04bb/status_badge.svg
+
+[![Codemagic build status](https://api.codemagic.io/apps/6a90358a26b2ddf9fd1c04bc/6a90358a26b2ddf9fd1c04bb/status_badge.svg)](https://codemagic.io/app/6a90358a26b2ddf9fd1c04bc/6a90358a26b2ddf9fd1c04bb/latest_build)
 
 A minimal **Hello World** Flutter app configured to build and run on both **Android** and **iOS**.
 
