@@ -1,0 +1,27 @@
+# This file tracks properties of this Flutter project.
+# Used by Flutter tool to assess capabilities and perform upgrades etc.
+#
+# This file should be version controlled and version bumps manually with
+# every change to the project.
+
+version:
+  revision: "78666e8dc57e9e8e3c5b67e6a4f6bbf3b5b34c7e"
+  channel: "stable"
+
+project_type: app
+
+migration:
+  platforms:
+    - platform: root
+      create_revision: 78666e8dc57e9e8e3c5b67e6a4f6bbf3b5b34c7e
+      base_revision: 78666e8dc57e9e8e3c5b67e6a4f6bbf3b5b34c7e
+    - platform: android
+      create_revision: 78666e8dc57e9e8e3c5b67e6a4f6bbf3b5b34c7e
+      base_revision: 78666e8dc57e9e8e3c5b67e6a4f6bbf3b5b34c7e
+    - platform: ios
+      create_revision: 78666e8dc57e9e8e3c5b67e6a4f6bbf3b5b34c7e
+      base_revision: 78666e8dc57e9e8e3c5b67e6a4f6bbf3b5b34c7e
+
+  unmanaged_files:
+    - 'lib/main.dart'
+    - 'ios/Flutter.xcconfig'
