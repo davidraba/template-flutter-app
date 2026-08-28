@@ -46,7 +46,7 @@ class HelloWorldHome extends StatelessWidget {
             ),
             SizedBox(height: 24),
             Text(
-              'Auto-deployed via Codemagic (build #3)',
+              'Auto-deployed via Codemagic (build #4)',
               style: TextStyle(fontSize: 14, color: Colors.blue),
             ),
           ],
