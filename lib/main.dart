@@ -44,6 +44,11 @@ class HelloWorldHome extends StatelessWidget {
               'Built with Flutter',
               style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
+            SizedBox(height: 24),
+            Text(
+              'Auto-deployed via Codemagic',
+              style: TextStyle(fontSize: 14, color: Colors.blue),
+            ),
           ],
         ),
       ),
