@@ -83,12 +83,12 @@ ios/                 # native iOS project — minimize edits; bump versions via 
 ### Deployment trigger (Codemagic)
 
 - **Plain `git push` does NOT trigger a build.** The `web-main` workflow in `codemagic.yaml` only listens for tag events.
-- To trigger a Codemagic build + Static Pages publish, push a tag that matches `test/*`:
+- To trigger a Codemagic build + Static Pages publish, push any tag to GitHub:
   ```bash
-  git tag test/build-3            # create tag locally at HEAD
-  git push origin test/build-3    # push the tag to GitHub -> Codemagic builds and publishes
+  git tag v1.0.0                  # create tag locally at HEAD
+  git push origin v1.0.0          # push the tag -> Codemagic builds and publishes
   ```
-- Tags that do NOT match `test/*` are ignored. Branch pushes (including to `main`) are ignored by `codemagic.yaml`. This avoids accidental deploys on every commit.
+- Tag names matching `test/*` are a long-standing convention for non-production deploys, but `codemagic.yaml` does not enforce it: **any tag push triggers a build**. Branch pushes (including to `main`) are ignored. This avoids accidental deploys on every commit.
 - Use distinct tag names per deploy attempt (e.g. `test/build-3`, `test/build-4`) — pushing the same tag again requires a force-push and replays the deploy.
 
 ## What agents should and should not do

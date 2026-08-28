@@ -74,16 +74,16 @@ flutter test
 
 ## Deployment (Codemagic Static Pages)
 
-A push to any branch does **not** trigger a build. The web build and Static Pages publish only run when a **tag matching `test/*`** is pushed to GitHub.
+A push to any branch does **not** trigger a build. The web build and Static Pages publish run only when a **tag** is pushed to GitHub.
 
 ```bash
 git add .
 git commit -m "Your change"
 git push origin main                  # no build runs
-git tag test/build-3                  # tag the current commit
-git push origin test/build-3          # triggers Codemagic build + Static Pages publish
+git tag v1.0.0                        # tag the current commit
+git push origin v1.0.0                # triggers Codemagic build + Static Pages publish
 ```
 
-The `web-main` workflow runs `flutter pub get`, `flutter analyze`, `flutter test`, then `flutter build web --release`, and Codemagic publishes `build/web` to `https://<subdomain>.codemagic.app` (the subdomain is configured in Codemagic UI → App settings → Distribution → Codemagic Static Pages). A success/failure email is sent to `david.raba@hipra.com`.
+`test/*` is a long-standing convention for non-production deploys, but `codemagic.yaml` does not enforce it: **any tag push triggers a build**.
 
-Tags that do not match `test/*` (e.g. `v1.0.0`, `release/2026-Q1`) are ignored by `codemagic.yaml`.
+The `web-main` workflow runs `flutter pub get`, `flutter analyze`, `flutter test`, then `flutter build web --release`, and Codemagic publishes `build/web` to `https://<subdomain>.codemagic.app` (the subdomain is configured in Codemagic UI → App settings → Distribution → Codemagic Static Pages). A success/failure email is sent to `david.raba@hipra.com`.
