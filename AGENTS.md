@@ -80,6 +80,17 @@ ios/                 # native iOS project — minimize edits; bump versions via 
 - One logical change per commit. Don't mix refactors with feature work.
 - PRs (if used) need a description, screenshots for UI changes, and a `flutter analyze` + `flutter test` green status.
 
+### Deployment trigger (Codemagic)
+
+- **Plain `git push` does NOT trigger a build.** The `web-main` workflow in `codemagic.yaml` only listens for tag events.
+- To trigger a Codemagic build + Static Pages publish, push a tag that matches `test/*`:
+  ```bash
+  git tag test/build-3            # create tag locally at HEAD
+  git push origin test/build-3    # push the tag to GitHub -> Codemagic builds and publishes
+  ```
+- Tags that do NOT match `test/*` are ignored. Branch pushes (including to `main`) are ignored by `codemagic.yaml`. This avoids accidental deploys on every commit.
+- Use distinct tag names per deploy attempt (e.g. `test/build-3`, `test/build-4`) — pushing the same tag again requires a force-push and replays the deploy.
+
 ## What agents should and should not do
 
 **Do:**
