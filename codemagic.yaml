@@ -1,75 +1,20 @@
 # Codemagic CI/CD configuration.
 #
 # Triggering rules:
-#   * Push to `main`   -> builds Android, iOS, and Web (web is published to Codemagic Static Pages)
-#   * Pull request     -> Android + iOS smoke build, no publishing
+#   * Push to `main`  -> builds Web and publishes to Codemagic Static Pages
+#
+# Android and iOS builds are intentionally NOT automated here. They can be
+# run on demand from the Codemagic UI.
 #
 # Branch triggers can also be configured from the Codemagic UI under
 # App settings -> Workflow -> Triggering.
+#
+# Codemagic Static Pages publishing is configured in the Codemagic UI under
+# App settings -> Distribution -> Codemagic Static Pages (set the subdomain
+# there; the build artifact `build/web` will be deployed automatically once
+# the workflow finishes successfully).
 
 workflows:
-  android-main:
-    name: Android (release APK)
-    max_build_duration: 60
-    environment:
-      flutter: stable
-      java: 17
-    scripts:
-      - name: Get packages
-        script: flutter pub get
-      - name: Run static analysis
-        script: flutter analyze
-      - name: Run tests
-        script: flutter test
-      - name: Build release APK
-        script: flutter build apk --release
-    artifacts:
-      - build/app/outputs/flutter-apk/app-release.apk
-    publishing:
-      email:
-        recipients:
-          - david.raba@hipra.com
-        notify:
-          success: true
-          failure: true
-    triggering:
-      events:
-        - push
-      branch_patterns:
-        - pattern: main
-          include: true
-        - pattern: feature/*
-          include: false
-        - pattern: fix/*
-          include: false
-
-  ios-main:
-    name: iOS (unsigned release)
-    max_build_duration: 60
-    environment:
-      flutter: stable
-      xcode: latest
-      cocoapods: default
-    scripts:
-      - name: Get packages
-        script: flutter pub get
-      - name: Install pods
-        script: cd ios && pod install && cd ..
-      - name: Run static analysis
-        script: flutter analyze
-      - name: Run tests
-        script: flutter test
-      - name: Build iOS (no codesign)
-        script: flutter build ios --release --no-codesign
-    artifacts:
-      - build/ios/iphoneos/Runner.app
-    triggering:
-      events:
-        - push
-      branch_patterns:
-        - pattern: main
-          include: true
-
   web-main:
     name: Web (publish to Codemagic Static Pages)
     max_build_duration: 30
@@ -94,22 +39,13 @@ workflows:
         notify:
           success: true
           failure: true
-      # Publish the built web bundle to Codemagic Static Pages.
-      # Subdomain is configured in the Codemagic UI under
-      # App settings -> Distribution -> Codemagic Static Pages.
-      # Override the publish directory if your build output differs.
-      scripts:
-        - name: Publish to Codemagic Static Pages
-          script: |
-            if [ -d build/web ]; then
-              echo "Publishing build/web to Codemagic Static Pages"
-            else
-              echo "No build/web directory found"
-              exit 1
-            fi
     triggering:
       events:
         - push
       branch_patterns:
         - pattern: main
           include: true
+        - pattern: feature/*
+          include: false
+        - pattern: fix/*
+          include: false
