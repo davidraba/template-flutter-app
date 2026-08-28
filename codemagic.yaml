@@ -1,15 +1,15 @@
 # Codemagic CI/CD configuration.
 #
 # Triggering rules:
-#   * Git tag matching `test/*`  -> builds Web and publishes to Codemagic Static Pages
+#   * Git tag push  -> builds Web and publishes to Codemagic Static Pages
 #   * Plain pushes to any branch -> NO build (ignored)
 #
 # Android and iOS builds are intentionally NOT automated here. They can be
 # run on demand from the Codemagic UI.
 #
 # To trigger a deployment, push a tag instead of a regular commit:
-#   git tag test/build-3            # create the tag locally
-#   git push origin test/build-3    # push the tag to GitHub -> triggers build
+#   git tag v1.0.0                  # create the tag locally
+#   git push origin v1.0.0          # push the tag to GitHub -> triggers build
 #
 # Branch triggers can also be configured from the Codemagic UI under
 # App settings -> Workflow -> Triggering.
@@ -47,8 +47,3 @@ workflows:
     triggering:
       events:
         - tag
-      tag_patterns:
-        - pattern: test/*
-          include: true
-        - pattern: "*"
-          include: false
